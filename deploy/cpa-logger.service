@@ -1,0 +1,31 @@
+[Unit]
+Description=CPA Logger - CLIProxyAPI Log Collector
+Documentation=https://github.com/k0ngk0ng/cpa-logger
+After=network.target clickhouse-server.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+
+ExecStart=/usr/local/bin/cpa-logger -config /etc/cpa-logger/config.yaml
+Restart=always
+RestartSec=5
+
+# 日志配置
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cpa-logger
+
+# 安全设置
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/cliproxyapi
+
+# 资源限制
+MemoryLimit=512M
+CPUQuota=50%
+
+[Install]
+WantedBy=multi-user.target

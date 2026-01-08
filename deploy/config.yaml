@@ -1,0 +1,16 @@
+# CPA Logger 配置文件
+
+# 日志目录 - CLIProxyAPI 生成日志的目录
+log_dir: /var/log/cliproxyapi
+
+# 批量处理设置
+batch_size: 1000
+flush_interval_seconds: 5
+
+# ClickHouse 配置
+clickhouse:
+  host: localhost
+  port: 9000
+  database: cpa_logs
+  username: default
+  password: ""

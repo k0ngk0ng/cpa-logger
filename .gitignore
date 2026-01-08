@@ -1,0 +1,32 @@
+# Binary
+cpa-logger
+cpa-logger-linux-*
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Dependency directories
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Config with secrets
+config.yaml
+!deploy/config.yaml
