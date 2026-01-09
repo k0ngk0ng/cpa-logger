@@ -7,11 +7,29 @@ log_dir: /var/log/cliproxyapi
 batch_size: 1000
 flush_interval_seconds: 5
 
-# 采集后删除设置
+# 采集后删除设置（全局默认）
 # delete_after_collect: 是否在成功采集后删除原始日志文件
 # delete_min_age_seconds: 删除前文件必须存在的最小时间（防止删除正在写入的文件）
 delete_after_collect: false
 delete_min_age_seconds: 300
+
+# 各类型日志的采集配置
+# enabled: 是否采集该类型日志
+# delete_after_collect: 覆盖全局删除配置（可选）
+log_types:
+  main:
+    enabled: true
+  v1_messages:
+    enabled: true
+  v1_count_tokens:
+    enabled: true
+  provider_messages:
+    enabled: true
+  provider_count_tokens:
+    enabled: true
+  event_batch:
+    enabled: false  # 禁用事件批量日志采集
+    # delete_after_collect: true  # 可单独配置删除策略
 
 # ClickHouse 配置
 clickhouse:

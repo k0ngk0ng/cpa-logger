@@ -171,7 +171,14 @@ func (c *Collector) processFile(filePath string) {
 	}
 
 	logType := parser.DetermineLogType(filePath)
+	logTypeStr := string(logType)
 	var recordCount uint32
+
+	// 检查该日志类型是否启用采集
+	typeConfig := c.cfg.GetLogTypeConfig(logTypeStr)
+	if !typeConfig.Enabled {
+		return
+	}
 
 	log.Printf("Processing file: %s (type: %s)", filepath.Base(filePath), logType)
 
@@ -232,8 +239,8 @@ func (c *Collector) processFile(filePath string) {
 	} else {
 		log.Printf("Processed %s: %d records", filepath.Base(filePath), recordCount)
 
-		// 根据配置决定是否删除文件
-		if c.cfg.DeleteAfterCollect {
+		// 根据配置决定是否删除文件（支持按类型单独配置）
+		if c.cfg.ShouldDeleteAfterCollect(logTypeStr) {
 			c.tryDeleteFile(filePath, info)
 		}
 	}
