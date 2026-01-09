@@ -231,5 +231,31 @@ func (c *Collector) processFile(filePath string) {
 		log.Printf("Error marking file as processed: %v", err)
 	} else {
 		log.Printf("Processed %s: %d records", filepath.Base(filePath), recordCount)
+
+		// 根据配置决定是否删除文件
+		if c.cfg.DeleteAfterCollect {
+			c.tryDeleteFile(filePath, info)
+		}
+	}
+}
+
+// tryDeleteFile 尝试删除已处理的日志文件
+func (c *Collector) tryDeleteFile(filePath string, info os.FileInfo) {
+	// 检查文件年龄，避免删除正在写入的文件
+	minAge := time.Duration(c.cfg.DeleteMinAge) * time.Second
+	if time.Since(info.ModTime()) < minAge {
+		log.Printf("Skipping delete (file too new): %s", filepath.Base(filePath))
+		return
+	}
+
+	// 不删除 main.log（当前正在写入的主日志）
+	if filepath.Base(filePath) == "main.log" {
+		return
+	}
+
+	if err := os.Remove(filePath); err != nil {
+		log.Printf("Error deleting file %s: %v", filepath.Base(filePath), err)
+	} else {
+		log.Printf("Deleted processed file: %s", filepath.Base(filePath))
 	}
 }

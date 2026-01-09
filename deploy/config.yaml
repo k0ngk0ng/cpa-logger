@@ -7,6 +7,12 @@ log_dir: /var/log/cliproxyapi
 batch_size: 1000
 flush_interval_seconds: 5
 
+# 采集后删除设置
+# delete_after_collect: 是否在成功采集后删除原始日志文件
+# delete_min_age_seconds: 删除前文件必须存在的最小时间（防止删除正在写入的文件）
+delete_after_collect: false
+delete_min_age_seconds: 300
+
 # ClickHouse 配置
 clickhouse:
   host: localhost
