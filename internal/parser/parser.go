@@ -15,12 +15,13 @@ import (
 type LogType string
 
 const (
-	LogTypeMain             LogType = "main"
-	LogTypeV1Messages       LogType = "v1_messages"
-	LogTypeV1CountTokens    LogType = "v1_count_tokens"
-	LogTypeProviderMessages LogType = "provider_messages"
+	LogTypeMain              LogType = "main"
+	LogTypeV1Messages        LogType = "v1_messages"
+	LogTypeV1CountTokens     LogType = "v1_count_tokens"
+	LogTypeProviderMessages  LogType = "provider_messages"
 	LogTypeProviderCountTokens LogType = "provider_count_tokens"
-	LogTypeEventBatch       LogType = "event_batch"
+	LogTypeProviderResponses LogType = "provider_responses"
+	LogTypeEventBatch        LogType = "event_batch"
 )
 
 // MainLogEntry main.log 日志条目
@@ -102,6 +103,8 @@ func DetermineLogType(filename string) LogType {
 		return LogTypeEventBatch
 	case strings.HasPrefix(base, "api-provider-agy-v1-messages-count_tokens"):
 		return LogTypeProviderCountTokens
+	case strings.HasPrefix(base, "api-provider-agy-responses"):
+		return LogTypeProviderResponses
 	case strings.HasPrefix(base, "api-provider-agy"):
 		return LogTypeProviderMessages
 	case strings.HasPrefix(base, "v1-messages-count_tokens"):

@@ -5,12 +5,13 @@ CLIProxyAPI 日志采集器，将日志实时导入 ClickHouse 进行存储和�
 ## 功能特性
 
 - 实时监控日志目录，自动处理新增日志文件
-- 支持 5 种日志类型的解析：
+- 支持 6 种日志类型的解析：
   - `main` - 主应用日志（Gin HTTP 日志 + 应用日志）
   - `v1_messages` - Claude Messages API 请求/响应
   - `v1_count_tokens` - Token 计数 API
   - `provider_messages` - 上游 Provider API 日志
   - `provider_count_tokens` - 上游 Provider Token 计数
+  - `provider_responses` - 上游 Provider Responses API (OpenAI)
   - `event_batch` - 客户端遥测事件
 - 自动提取流式响应的完整内容（`full_response` 字段）
 - 文件去重处理，避免重复导入
@@ -112,6 +113,8 @@ log_types:
   provider_messages:
     enabled: true
   provider_count_tokens:
+    enabled: true
+  provider_responses:
     enabled: true
   event_batch:
     enabled: false  # 禁用事件批量日志采集

@@ -26,6 +26,7 @@ type LogTypesConfig struct {
 	V1CountTokens        LogTypeConfig `yaml:"v1_count_tokens"`
 	ProviderMessages     LogTypeConfig `yaml:"provider_messages"`
 	ProviderCountTokens  LogTypeConfig `yaml:"provider_count_tokens"`
+	ProviderResponses    LogTypeConfig `yaml:"provider_responses"`
 	EventBatch           LogTypeConfig `yaml:"event_batch"`
 }
 
@@ -59,6 +60,7 @@ func Load(path string) (*Config, error) {
 			V1CountTokens:       LogTypeConfig{Enabled: true},
 			ProviderMessages:    LogTypeConfig{Enabled: true},
 			ProviderCountTokens: LogTypeConfig{Enabled: true},
+			ProviderResponses:   LogTypeConfig{Enabled: true},
 			EventBatch:          LogTypeConfig{Enabled: true},
 		},
 	}
@@ -89,6 +91,8 @@ func (c *Config) GetLogTypeConfig(logType string) LogTypeConfig {
 		return c.LogTypes.ProviderMessages
 	case "provider_count_tokens":
 		return c.LogTypes.ProviderCountTokens
+	case "provider_responses":
+		return c.LogTypes.ProviderResponses
 	case "event_batch":
 		return c.LogTypes.EventBatch
 	default:

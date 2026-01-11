@@ -206,7 +206,8 @@ func (c *Collector) processFile(filePath string) {
 		recordCount = uint32(len(entries))
 
 	case parser.LogTypeV1Messages, parser.LogTypeV1CountTokens,
-		parser.LogTypeProviderMessages, parser.LogTypeProviderCountTokens:
+		parser.LogTypeProviderMessages, parser.LogTypeProviderCountTokens,
+		parser.LogTypeProviderResponses:
 		entry, err := parser.ParseAPILog(filePath, logType)
 		if err != nil {
 			log.Printf("Error parsing API log %s: %v", filePath, err)

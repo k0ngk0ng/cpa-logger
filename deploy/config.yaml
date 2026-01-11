@@ -27,6 +27,8 @@ log_types:
     enabled: true
   provider_count_tokens:
     enabled: true
+  provider_responses:
+    enabled: true
   event_batch:
     enabled: false  # 禁用事件批量日志采集
     # delete_after_collect: true  # 可单独配置删除策略
